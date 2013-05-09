@@ -1,0 +1,61 @@
+<?php
+class MY_Model extends CI_Model
+{
+	protected $table;
+	protected $pk = 'id';
+
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
+	public function insert($data)
+	{
+		$this->db->insert($this->table,$data);
+		return $this->db->insert_id();
+	}
+
+	public function update($data)
+	{
+		if(is_array($data))
+			$data['updated_at'] = date();
+		else
+			$data->updated_at = date();
+		$this->db->where($this->pk,$data->id);
+		return $this->db->update($this->table,$data);
+	}
+
+	public function delete($id, $force_delete = FALSE)
+	{
+		$this->db->where($this->pk,$id);
+		if($force_delete)
+			return $this->db->delete($this->table);
+		else
+			return $this->db->update($this->table, array('deleted' => 1, 'deleted_at' => date()));
+	}
+
+	public function recover($id)
+	{
+		$this->db->where($this->pk,$id);
+		return $this->db->update($this->table, array('deleted' => 0, 'updated_at' => date()));
+	}
+
+	public function get($id, $show_deleted = FALSE){
+		$this->db->where($this->pk,$id);
+		
+		if(!$show_deleted)
+			$this->db->where('deleted', 0);
+
+		$query = $this->db->get($this->table);
+		return $query->row();
+	}
+
+	public function get_all($show_deleted = FALSE){
+		if(!$show_deleted)
+			$this->db->where('deleted', 0);
+
+		$query = $this->db->where(array('deleted' => 0))->get($this->table);
+		return $query->result();
+	}
+
+}

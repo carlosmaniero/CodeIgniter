@@ -137,15 +137,27 @@ class CI_Exceptions {
 	 */
 	public function show_error($heading, $message, $template = 'error_general', $status_code = 500)
 	{
+		$URI =& load_class('URI', 'core');
+
 		set_status_header($status_code);
 
-		$message = '<p>'.implode('</p><p>', is_array($message) ? $message : array($message)).'</p>';
+
+		$message_html = '<p>'.implode('</p><p>', is_array($message) ? $message : array($message)).'</p>';
 
 		if (ob_get_level() > $this->ob_level + 1)
 		{
 			ob_end_flush();
 		}
 		ob_start();
+
+		if($URI->extension === 'json')
+		{
+			header('Content-type: application/json');
+			return json_encode(array('message'=>$message));
+		}
+
+		$message = $message_html;
+
 		include(VIEWPATH.'errors/'.$template.'.php');
 		$buffer = ob_get_contents();
 		ob_end_clean();

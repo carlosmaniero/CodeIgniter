@@ -54,6 +54,13 @@ class CI_URI {
 	public $uri_string;
 
 	/**
+	 * Current URI extension
+	 *
+	 * @var	string
+	 */
+	public $extension;
+
+	/**
 	 * List of URI segments
 	 *
 	 * @var	array
@@ -164,7 +171,20 @@ class CI_URI {
 	protected function _set_uri_string($str)
 	{
 		// Filter out control characters and trim slashes
-		$this->uri_string = trim(remove_invisible_characters($str, FALSE), '/');
+		$uri = explode('.',$str);
+
+		if(($len = count($uri)) > 1)
+		{
+			$this->extension = $uri[$len - 1];
+			unset($uri[$len - 1]);
+		}
+		else
+		{
+			$this->extension = $this->config->item('default_extension');
+		}
+		$uri = implode('.', $uri);
+
+		$this->uri_string = trim(remove_invisible_characters($uri, FALSE), '/');
 	}
 
 	// --------------------------------------------------------------------

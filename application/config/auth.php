@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
  *
@@ -24,33 +24,33 @@
  * @since		Version 1.0
  * @filesource
  */
-defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+/*
+|--------------------------------------------------------------------------
+| Login Enable
+|--------------------------------------------------------------------------
+|
+| Login system are enable?
+|
+*/
+$config['login_enable']	= TRUE;
 
-	protected $require_auth = array('login_required');
-	protected $permission_auth = array('admin');
+/*
+|--------------------------------------------------------------------------
+| Login Controller
+|--------------------------------------------------------------------------
+|
+| Controller of login
+|
+*/
+$config['login_controller']	= 'login';
 
-	public function login_required()
-	{
-		if($this->uri->extension == 'json'){
-			$this->responde_json(array('message'=>'Only loggged user!'));
-		}else{
-			$this->load->view('welcome_message');
-		}
-	}
-
-
-	public function index()
-	{
-
-		if($this->uri->extension == 'json'){
-			$this->responde_json(array('message'=>'Welcome to CodeIgniter!'));
-		}else{
-			$this->load->view('welcome_message');
-		}
-	}
-}
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
+/*
+|--------------------------------------------------------------------------
+| Login method
+|--------------------------------------------------------------------------
+|
+| method of login
+|
+*/
+$config['login_method']	= '';

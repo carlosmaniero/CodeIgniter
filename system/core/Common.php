@@ -438,6 +438,7 @@ if ( ! function_exists('log_message'))
 			$_log_threshold = config_item('log_threshold');
 		}
 
+
 		if ($_log_threshold === 0)
 		{
 			return;

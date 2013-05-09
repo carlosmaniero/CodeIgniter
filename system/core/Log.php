@@ -115,6 +115,7 @@ class CI_Log {
 			$this->_enabled = FALSE;
 		}
 
+
 		if (is_numeric($config['log_threshold']))
 		{
 			$this->_threshold = (int) $config['log_threshold'];
@@ -129,6 +130,7 @@ class CI_Log {
 		{
 			$this->_date_fmt = $config['log_date_format'];
 		}
+
 	}
 
 	// --------------------------------------------------------------------
@@ -159,6 +161,8 @@ class CI_Log {
 		}
 
 		$filepath = $this->_log_path.'log-'.date('Y-m-d').'.'.$this->_file_ext;
+
+
 		$message = '';
 
 		if ( ! file_exists($filepath))

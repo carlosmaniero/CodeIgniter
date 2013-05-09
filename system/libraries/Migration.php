@@ -184,10 +184,12 @@ class CI_Migration {
 	 */
 	public function version($target_version)
 	{
+
 		$current_version = (int) $this->_get_version();
 		$target_version = (int) $target_version;
 
 		$migrations = $this->find_migrations();
+
 
 		if ($target_version > 0 && ! isset($migrations[$target_version]))
 		{
@@ -214,9 +216,12 @@ class CI_Migration {
 
 		$previous = FALSE;
 
+
 		// Validate all available migrations, and run the ones within our target range
 		foreach ($migrations as $number => $file)
 		{
+
+
 			// Check for sequence gaps
 			if ($this->_migration_type === 'sequential' && $previous !== FALSE && abs($number - $previous) > 1)
 			{
@@ -333,6 +338,7 @@ class CI_Migration {
 		{
 			$name = basename($file, '.php');
 
+
 			// Filter out non-migration files
 			if (preg_match($this->_migration_regex, $name))
 			{
@@ -350,6 +356,7 @@ class CI_Migration {
 		}
 
 		ksort($migrations);
+
 		return $migrations;
 	}
 

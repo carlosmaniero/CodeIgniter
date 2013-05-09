@@ -81,10 +81,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => '',
+	'hostname' => '192.168.1.200',
+	'username' => 'user',
+	'password' => 'user$',
+	'database' => 'codeigniter_test',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => TRUE,
@@ -100,6 +100,7 @@ $db['default'] = array(
 	'stricton' => FALSE,
 	'failover' => array()
 );
+
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */

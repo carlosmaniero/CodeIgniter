@@ -43,6 +43,16 @@ $config['base_url']	= '';
 
 /*
 |--------------------------------------------------------------------------
+| Default extension
+|--------------------------------------------------------------------------
+|
+| Default extension user in your codeigniter
+|
+*/
+$config['default_extension']	= 'html';
+
+/*
+|--------------------------------------------------------------------------
 | Index File
 |--------------------------------------------------------------------------
 |
@@ -153,7 +163,7 @@ $config['subclass_prefix'] = 'MY_';
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-=+-,';
 
 
 /*
@@ -211,7 +221,7 @@ $config['directory_trigger']	= 'd'; // experimental not currently in use
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 4;
 
 /*
 |--------------------------------------------------------------------------
@@ -272,7 +282,7 @@ $config['cache_path'] = '';
 | http://codeigniter.com/user_guide/libraries/sessions.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'guhrdzs)&*54ˆ#2342C';
 
 /*
 |--------------------------------------------------------------------------

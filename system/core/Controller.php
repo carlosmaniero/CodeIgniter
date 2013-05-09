@@ -46,6 +46,7 @@ class CI_Controller {
 	 * @var	object
 	 */
 	private static $instance;
+	private $auth_config;
 
 	/**
 	 * Class constructor
@@ -66,7 +67,98 @@ class CI_Controller {
 
 		$this->load =& load_class('Loader', 'core');
 		$this->load->initialize();
+
+		// Load Auth Library if is enable
+		$this->config->load('auth');
+		if($this->config->item('login_enable'))
+		{
+			$this->_check_login_on_controller();
+		}
+
 		log_message('debug', 'Controller Class Initialized');
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Check login
+	 *
+	 */
+	private function _check_login_on_controller()
+	{
+	
+		$check_login = FALSE;
+
+		if(isset($this->require_auth))
+		{
+			if($this->require_auth === TRUE){
+				// Need login in all methods
+				$check_login = TRUE;
+			}
+			elseif(is_array($this->require_auth)) 
+			{
+				if(in_array($this->router->fetch_method(), $this->require_auth))
+				{
+					// Need login in especific methods
+					$check_login = TRUE;
+				}
+			}
+			elseif($this->router->fetch_method() === $this->require_auth)
+			{
+				// Need login in especific method
+				$check_login = TRUE;
+			}
+
+		}
+
+		if($check_login)
+		{
+			// Check Login
+			if(!$this->auth->check_login())
+			{
+				// Set the Redirect on Auth
+				$this->session->set_flashdata('auth_redirect', $this->router->fetch_class() . '/' . $this->router->fetch_method() . '.' . $this->uri->extension);
+
+				if($this->uri->extension === 'json')
+				{
+					show_error('You must be logged in', 403);
+				}
+				else
+				{
+					// Message error
+					$this->session->set_flashdata('auth_error', 'You must be logged in');
+					// Redirect to login form
+					redirect($this->config->item('login_controller') . '/' . $this->config->item('login_method') . '.' . $this->uri->extension);
+				}
+			}
+			// Check permission
+			elseif(isset($this->permission_auth))
+			{
+				if(!$this->auth->check_permission($this->permission_auth))
+				{
+					if($this->uri->extension === 'json')
+					{
+						show_error('You don`t have permission to do it', 403);
+					}
+					else
+					{
+						// Message error
+						$this->session->set_flashdata('auth_error', 'You don`t have permission to do it');
+						// Redirect to login form
+						redirect($this->config->item('login_controller') . '/' . $this->config->item('login_method') . '.' . $this->uri->extension);
+					}
+				}
+			}
+		}
+
+	}
+
+	function responde_json($data, $status_code = 200)
+	{
+		set_status_header($status_code);
+		header('Content-type: application/json');
+
+		echo json_encode($data);
 	}
 
 	// --------------------------------------------------------------------
