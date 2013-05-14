@@ -232,5 +232,43 @@ if ( ! function_exists('is_countable'))
 	}
 }
 
+// --------------------------------------------------------------------
+
+if ( ! function_exists('format_date'))
+{
+	/**
+	 * Transform date to 
+	 *
+	 * @param	string	$word	Word to check
+	 * @return	bool
+	 */
+	function format_date($date, $div = '/')
+	{
+		if($div == '-')
+			$tmp = explode('/', $date);
+		else
+			$tmp = explode('-', $date);
+		
+		return $tmp[2] . $div . $tmp[1] . $div . $tmp[0];
+	}
+}
+
+// --------------------------------------------------------------------
+
+if ( ! function_exists('format_datetime'))
+{
+	/**
+	 * Transform datetime to 
+	 *
+	 * @param	string	$word	Word to check
+	 * @return	bool
+	 */
+	function format_datetime($date, $div = '/')
+	{
+		$tmp = explode(' ', $date);
+		return format_date($tmp[0], $div) . ' ' . $tmp[1];
+	}
+}
+
 /* End of file inflector_helper.php */
 /* Location: ./system/helpers/inflector_helper.php */

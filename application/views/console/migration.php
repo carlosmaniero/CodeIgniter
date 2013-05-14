@@ -29,7 +29,7 @@ class Migration_<?= ucfirst($name) ?> extends CI_Migration {
 		<? else: ?>
 
 		$this->dbforge->add_field(array(
-			'<?= $attr['properties'] ?>_id' => array(
+			'<?= singular($attr['properties']) ?>_id' => array(
 				'type' => 'INT',
 				'unsigned' => TRUE,
 			)));
@@ -56,30 +56,30 @@ class Migration_<?= ucfirst($name) ?> extends CI_Migration {
 		)));
 
 		<? foreach ($attrs as $attr): if($attr['name'] == 'belong_to'): ?>
-			$this->dbforge->add_field("CONSTRAINT FOREIGN KEY (<?= $attr['properties'] ?>_id) REFERENCES <?= $attr['properties'] ?>(id)");
+			$this->dbforge->add_field("CONSTRAINT FOREIGN KEY (<?= singular($attr['properties']) ?>_id) REFERENCES <?= $attr['properties'] ?>(id)");
 		<? endif; endforeach; ?>
 
 		// Add id as primary key
 		$this->dbforge->add_key('id', TRUE);
 
-		if($this->dbforge->create_table('<?= $name ?>'))
+		if($this->dbforge->create_table('<?= plural($name); ?>'))
 		{
-			log_message('debug', 'Table <?= $name ?> created!');
+			log_message('debug', 'Table <?= plural($name); ?> created!');
 		}
 		else
 		{
-			log_message('error', 'Error on create <?= $name ?> table');
+			log_message('error', 'Error on create <?= plural($name); ?> table');
 		}
 	}
 
 	public function down() {
-		if($this->dbforge->drop_table('<?= $name ?>'))
+		if($this->dbforge->drop_table('<?= plural($name); ?>'))
 		{
-			log_message('debug', 'Table <?= $name ?> droped');
+			log_message('debug', 'Table <?= plural($name); ?> droped');
 		}
 		else
 		{
-			log_message('error', 'Error on drop <?= $name ?> table');
+			log_message('error', 'Error on drop <?= plural($name); ?> table');
 		}
 	}
 

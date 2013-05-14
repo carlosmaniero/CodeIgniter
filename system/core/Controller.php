@@ -153,7 +153,7 @@ class CI_Controller {
 
 	}
 
-	function responde_json($data, $status_code = 200)
+	function response_json($data, $status_code = 200)
 	{
 		set_status_header($status_code);
 		header('Content-type: application/json');

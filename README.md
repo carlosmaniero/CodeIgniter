@@ -25,7 +25,7 @@ Voltando para um estado específico:
 ## Autenticação Nativa
 
 ```php
-	class Welcome extends CI_Controller {
+class Welcome extends CI_Controller {
 
 	// Array com métodos que exigem autenticação TRUE para todos.
 	protected $require_auth = array('login_required'); 
@@ -59,12 +59,16 @@ Voltando para um estado específico:
 Você pode usar extensões em suas URL, por exemplo: http://localhost/index.php/controller/method.json
 
 ```php
-	public function method()
-	{
-		if($this->uri->extension == 'json'){
-			$this->responde_json(array('message'=>'This is a json'));
-		}else{
-			$this->load->view('view');
-		}
+public function method()
+{
+	if($this->uri->extension == 'json'){
+		$this->responde_json(array('message'=>'This is a json'));
+	}else{
+		$this->load->view('view');
 	}
+}
 ```
+
+## Recursos Externos
+
+* https://github.com/jamierumbelow/codeigniter-base-model

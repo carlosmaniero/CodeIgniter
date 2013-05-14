@@ -35,10 +35,11 @@ class Console extends CI_Controller {
 	{
 		$args = func_get_args();
 
-		if(count($args) < 2) $this->show_error("Model deve conter um nome e no mínimo um atributo");
-
-		if($this->get_input('Criar migration? [y/n]') == 'y')
-			call_user_func_array(array(&$this,'generate_migration'),$args);
+		if(count($args) < 1) 
+			$this->show_error("Model deve conter um nome");
+		elseif(count($args) > 1)
+			if($this->get_input('Criar migration? [y/n]') == 'y')
+				call_user_func_array(array(&$this,'generate_migration'),$args);
 
 		$name = $args[0];
 
@@ -81,7 +82,6 @@ class Console extends CI_Controller {
 
 		write_file($migration_file,$migration);
 
-
 	}
 
 	/**
@@ -89,6 +89,7 @@ class Console extends CI_Controller {
 	 */
 	private function parse_attributes($attr)
 	{
+
 		// If is_array use recursive
 		if(is_array($attr))
 		{
@@ -100,6 +101,13 @@ class Console extends CI_Controller {
 			return $ret;
 		}
 
+		$default_properties = array();
+		$default_properties['string'] = $default_properties['file'] = array('type' => 'varchar', 'constraint' => '240');
+		$default_properties['text'] = array('type' => 'text');
+		$default_properties['date'] = array('type' => 'date');
+		$default_properties['datetime'] = array('type' => 'datetime');
+		$default_properties['bool'] = array('type' => 'tinyint');
+
 		// Function
 		$ret = array();
 		@list($ret['name'],$str_properties) = explode(':', $attr);
@@ -109,7 +117,11 @@ class Console extends CI_Controller {
 		foreach ($array_properties as $value) {
 			$tmp = explode('=', $value);
 			
-			if($tmp[0] && $ret['name'] != 'belong_to')
+			if(isset($default_properties[$tmp[0]]))
+			{
+				$properties = array_merge($properties, $default_properties[$tmp[0]]);
+			}
+			elseif($tmp[0] && $ret['name'] != 'belong_to')
 				$properties[$tmp[0]] = $tmp[1];
 			elseif($ret['name'] == 'belong_to')
 				$properties = $tmp[0];
@@ -118,6 +130,13 @@ class Console extends CI_Controller {
 		$ret['properties'] = $properties;
 
 		return $ret;
+	}
+
+	public function test_attr()
+	{
+		$args = func_get_args();
+		$attr = $this->parse_attributes($args);
+		print_r($attr);
 	}
 
 
