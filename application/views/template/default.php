@@ -26,6 +26,24 @@
 
         <div class="container">
 
+            <!-- Flash messages -->
+            <?php if($success = $this->session->flashdata('success')): ?>
+                <p class="text-success"><?= $success; ?></p>
+            <?php endif; ?>
+
+            <?php if($info = $this->session->flashdata('info')): ?>
+                <p class="text-info"><?= $info; ?></p>
+            <?php endif; ?>
+
+            <?php if($warning = $this->session->flashdata('warning')): ?>
+                <p class="text-warning"><?= $warning; ?></p>
+            <?php endif; ?>
+
+            <?php if($error = $this->session->flashdata('error')): ?>
+                <p class="text-error"><?= $error; ?></p>
+            <?php endif; ?>
+            <!-- End Flash messages -->
+
             <?= $contents ?>
 
         </div>

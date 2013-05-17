@@ -234,6 +234,27 @@ class MY_Model extends CI_Model
     }
 
     /**
+     * Fetch all the records deleted in the table. Can be used as a generic call
+     */
+    public function get_deleted()
+    {
+        $this->trigger('before_get');
+
+        $result = $this->_database->where($this->soft_delete_key, TRUE)->get($this->_table)
+                           ->{$this->_return_type(1)}();
+        $this->_temporary_return_type = $this->return_type;
+
+        foreach ($result as $key => &$row)
+        {
+            $row = $this->trigger('after_get', $row, ($key == count($result) - 1));
+        }
+
+        $this->_with = array();
+        return $result;
+    }
+
+
+    /**
      * Insert a new row into the table. $data should be an associative array
      * of data to be inserted. Returns newly created ID.
      */
@@ -383,15 +404,15 @@ class MY_Model extends CI_Model
     /**
      * Delete a row from the table by the primary value
      */
-    public function delete($id)
+    public function delete($id, $force_delete = FALSE)
     {
         $this->trigger('before_delete', $id);
 
         $this->_database->where($this->primary_key, $id);
 
-        if ($this->soft_delete)
+        if ($this->soft_delete && !$force_delete)
         {
-            $result = $this->_database->update($this->_table, array( $this->soft_delete_key => TRUE, $this->soft_delete_at_key = date('Y-m-d H:i:s') ));
+            $result = $this->_database->update($this->_table, array( $this->soft_delete_key => TRUE, $this->soft_delete_at_key => date('Y-m-d H:i:s') ));
         }
         else
         {
@@ -446,6 +467,20 @@ class MY_Model extends CI_Model
         }
 
         $this->trigger('after_delete', $result);
+
+        return $result;
+    }
+
+    /**
+     * Recover a row from the table by the primary value
+     */
+    public function recover($id)
+    {
+        $this->trigger('before_recover', $id);
+
+        $result = $this->_database->where($this->primary_key, $id)->update($this->_table, array( $this->soft_delete_key => FALSE ));
+
+        $this->trigger('after_recover', $result);
 
         return $result;
     }

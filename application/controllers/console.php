@@ -2,6 +2,8 @@
 
 class Console extends CI_Controller {
 
+	private $force_migration = TRUE;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -28,6 +30,73 @@ class Console extends CI_Controller {
 		}
 	}
 
+	public function scaffold()
+	{
+		$args = func_get_args();
+
+		$this->force_migration = TRUE;
+		call_user_func_array(array(&$this,'generate_model'),$args);
+		call_user_func_array(array(&$this,'generate_controller'),$args);
+		call_user_func_array(array(&$this,'generate_views'),$args);
+	}
+
+
+
+	public function generate_views()
+	{
+		$args = func_get_args();
+
+		$name = $args[0];
+		unset($args[0]);
+
+		$attr = $this->parse_attributes($args);
+		$data = array('name' => $name, 'attrs' => $attr);
+
+		$form = str_replace('</?', '<?', $this->load->view('console/views/form', $data, true));
+		$edit = str_replace('</?', '<?', $this->load->view('console/views/edit', $data, true));
+		$index = str_replace('</?', '<?', $this->load->view('console/views/index', $data, true));
+		$insert = str_replace('</?', '<?', $this->load->view('console/views/insert', $data, true));
+		$show = str_replace('</?', '<?', $this->load->view('console/views/show', $data, true));
+		$trash = str_replace('</?', '<?', $this->load->view('console/views/trash', $data, true));
+
+		$path = sprintf("%s/views/%s", APPPATH, plural($name));
+		$form_file = sprintf("%s/views/%s/form.php", APPPATH, plural($name));
+		$edit_file = sprintf("%s/views/%s/edit.php", APPPATH, plural($name));
+		$index_file = sprintf("%s/views/%s/index.php", APPPATH, plural($name));
+		$insert_file = sprintf("%s/views/%s/insert.php", APPPATH, plural($name));
+		$show_file = sprintf("%s/views/%s/show.php", APPPATH, plural($name));
+		$trash_file = sprintf("%s/views/%s/trash.php", APPPATH, plural($name));
+
+		if(!is_dir($path))
+			mkdir($path);
+
+		write_file($form_file,$form);	
+		write_file($edit_file,$edit);
+		write_file($index_file,$index);
+		write_file($insert_file,$insert);
+		write_file($show_file,$show);
+		write_file($trash_file,$trash);
+	}
+
+	/**
+	 * Generate Model
+	 */
+	public function generate_controller()
+	{
+		$args = func_get_args();
+
+		if(count($args) < 1) 
+			$this->show_error("Model deve conter um nome");
+
+		$name = $args[0];
+
+		$controller = '<?php ' . $this->load->view('console/controller', array('name' => $name), true);
+		$controller_file = sprintf("%s/controllers/%s.php", APPPATH, plural($name));
+
+		write_file($controller_file,$controller);
+
+	}
+
 	/**
 	 * Generate Model
 	 */
@@ -38,13 +107,13 @@ class Console extends CI_Controller {
 		if(count($args) < 1) 
 			$this->show_error("Model deve conter um nome");
 		elseif(count($args) > 1)
-			if($this->get_input('Criar migration? [y/n]') == 'y')
+			if($this->force_migration || $this->get_input('Criar migration? [y/n]') == 'y')
 				call_user_func_array(array(&$this,'generate_migration'),$args);
 
 		$name = $args[0];
 
 		$model = '<?php ' . $this->load->view('console/model', array('name' => $name), true);
-		$model_file = sprintf("%s/models/%s.php", APPPATH, $name);
+		$model_file = sprintf("%s/models/%s_model.php", APPPATH, $name);
 
 		write_file($model_file,$model);
 
