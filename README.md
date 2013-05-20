@@ -22,6 +22,13 @@ Voltando para um estado específico:
 
 	php index.php console migrations 0
 
+## Scaffold
+
+*Criando um CRUD completo*
+
+	php index.php console scaffold post title:string body:text
+	php index.php console scaffold comment name:string comment:text belong_to:posts
+
 ## Autenticação Nativa
 
 ```php
@@ -72,3 +79,4 @@ public function method()
 ## Recursos Externos
 
 * https://github.com/jamierumbelow/codeigniter-base-model
+* http://twitter.github.io/bootstrap/
