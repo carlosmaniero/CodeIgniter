@@ -10,7 +10,7 @@ foreach ($attrs as $attr): if($attr['name'] != 'belong_to'):
 <?php else: ?>
 
 <p>
-	<strong>ID do <?= ucfirst(singular($attr['properties'])) ?></strong> <a href="</?= site_url('<?= plural($attr['properties']) ?>/show/' .  $<?= $name ?>-><?= $attr['properties'] ?>_id) ?>"></?= $<?= $name ?>-><?= $attr['properties'] ?>_id ?></a>
+	<strong>ID do <?= ucfirst(singular($attr['properties'])) ?></strong> <a href="</?= site_url('<?= plural($attr['properties']) ?>/show/' .  $<?= $name ?>-><?= singular($attr['properties']) ?>_id) ?>"></?= $<?= $name ?>-><?= singular($attr['properties']) ?>_id ?></a>
 </p>
 <?php
 	endif; 

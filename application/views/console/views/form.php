@@ -22,9 +22,9 @@
 	<?php else: ?>
 
 	<div class="control-group">
-	  <label class="control-label" for="input-<?= $attr['properties'] ?>-id">ID do <?= ucfirst(singular($attr['properties'])) ?>:</label>
+	  <label class="control-label" for="input-<?= singular($attr['properties']) ?>-id">ID do <?= ucfirst(singular($attr['properties'])) ?>:</label>
 	  <div class="controls">
-	    <input name="<?= $attr['properties'] ?>_id" id="input-<?= $attr['properties'] ?>-id" type="text" placeholder="<?= ucfirst($attr['properties']) ?>" value="</?= $<?= singular($name) ?>-><?= $attr['properties'] ?>_id ?>">
+	    <input name="<?= singular($attr['properties']) ?>_id" id="input-<?= singular($attr['properties']) ?>-id" type="text" placeholder="<?= ucfirst($attr['properties']) ?>" value="</?= $<?= singular($name) ?>-><?= singular($attr['properties']) ?>_id ?>">
 	  </div>
 	</div>
 	<?php
