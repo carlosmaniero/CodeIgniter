@@ -8,11 +8,11 @@ Fork do Codeigniter com alguns recursos adicionais
 
 Criação de Models:
 
-	php index.php console generate_model funcinarios nome:type=varchar,constrint=100 email:type=varchar,constrint=100
+	php index.php console generate_model funcinarios nome:type=varchar,constraint=100 email:type=varchar,constraint=100
 
 Criação de Models com Chave estrangeira:
 
-	php index.php console generate_model filhos_do_funcinarios nome:type=varchar,constrint=100 belong_to:funcionario
+	php index.php console generate_model filhos_do_funcinarios nome:type=varchar,constraint=100 belong_to:funcionario
 
 Rodando Migrations:
 
