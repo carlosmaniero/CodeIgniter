@@ -13,6 +13,7 @@ class Console extends CI_Controller {
 
 	/**
 	 * Run Migrations
+	 * Command: php index.php console migration [version=lasted]
 	 */
 	public function migration($version = null)
 	{
@@ -30,6 +31,10 @@ class Console extends CI_Controller {
 		}
 	}
 
+	/**
+	 * Generate Scaffold (Models, Controllers and Views)
+	 * Command: php index.php console scaffold table_name table_column1:options [table_column2:options...]
+	 */
 	public function scaffold()
 	{
 		$args = func_get_args();
@@ -41,7 +46,10 @@ class Console extends CI_Controller {
 	}
 
 
-
+	/**
+	 * Generate Views
+	 * Command: php index.php console generate_views table_name table_column1:options [table_column2:options...]
+	 */
 	public function generate_views()
 	{
 		$args = func_get_args();
@@ -67,7 +75,13 @@ class Console extends CI_Controller {
 		$show_file = sprintf("%s/views/%s/show.php", APPPATH, plural($name));
 		$trash_file = sprintf("%s/views/%s/trash.php", APPPATH, plural($name));
 
-		if(!is_dir($path))
+		// Check if path exists
+		if(
+			is_dir($path) && 
+			$this->get_input('View Path already exists! Override Files? [y/n]') !== 'y'
+		)
+			return;
+		else
 			mkdir($path);
 
 		write_file($form_file,$form);	
@@ -79,35 +93,44 @@ class Console extends CI_Controller {
 	}
 
 	/**
-	 * Generate Model
+	 * Generate Controller
+	 * Command: php index.php console generate_controller table_name table_column1:options [table_column2:options...]
 	 */
 	public function generate_controller()
 	{
 		$args = func_get_args();
 
 		if(count($args) < 1) 
-			$this->show_error("Model deve conter um nome");
+			$this->show_error("Controller must have a name.");
 
 		$name = $args[0];
 
 		$controller = '<?php ' . $this->load->view('console/controller', array('name' => $name), true);
 		$controller_file = sprintf("%s/controllers/%s.php", APPPATH, plural($name));
 
+		// Check if controller already exist
+		if(
+			is_file($controller_file) && 
+			$this->get_input('Controller already exists! Override? [y/n]') !== 'y'
+		) return;
+
+
 		write_file($controller_file,$controller);
 
 	}
 
 	/**
-	 * Generate Model
+	 * Generate Model (Models, Controllers and Views)
+	 * Command: php index.php generate_model scaffold table_name table_column1:options [table_column2:options...]
 	 */
 	public function generate_model()
 	{
 		$args = func_get_args();
 
 		if(count($args) < 1) 
-			$this->show_error("Model deve conter um nome");
+			$this->show_error("Model must have a name");
 		elseif(count($args) > 1)
-			if($this->force_migration || $this->get_input('Criar migration? [y/n]') == 'y')
+			if($this->force_migration || $this->get_input('Criar migration? [y/n]') !== 'y')
 				call_user_func_array(array(&$this,'generate_migration'),$args);
 
 		$name = $args[0];
@@ -115,12 +138,19 @@ class Console extends CI_Controller {
 		$model = '<?php ' . $this->load->view('console/model', array('name' => $name), true);
 		$model_file = sprintf("%s/models/%s_model.php", APPPATH, $name);
 
+		// Check if model already exist
+		if(
+			is_file($model_file) && 
+			$this->get_input('Model already exists! Override? [y/n]') !== 'y'
+		) return;
+
 		write_file($model_file,$model);
 
 	}
 
 	/**
-	 * Generate Migration
+	 * Generate migration
+	 * Command: php index.php console generate_migration table_name table_column1:options [table_column2:options...]
 	 */
 	public function generate_migration()
 	{
@@ -154,7 +184,8 @@ class Console extends CI_Controller {
 	}
 
 	/**
-	 * Parse atributues
+	 * Parse atributues:
+	 * Transform input string in array
 	 */
 	private function parse_attributes($attr)
 	{
@@ -201,6 +232,9 @@ class Console extends CI_Controller {
 		return $ret;
 	}
 
+	/**
+	 * Print parsed array
+	 */
 	public function test_attr()
 	{
 		$args = func_get_args();
@@ -215,7 +249,7 @@ class Console extends CI_Controller {
 	private function show_error($msg)
 	{
 		echo "********************************************************************************************************\n";
-		echo "ERRO: $msg \n";
+		echo "ERROR: $msg \n";
 		echo "********************************************************************************************************\n";
 		exit;
 	}

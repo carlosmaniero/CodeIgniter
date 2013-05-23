@@ -81,9 +81,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '192.168.1.200',
-	'username' => 'user',
-	'password' => 'user$',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
 	'database' => 'codeigniter_test',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

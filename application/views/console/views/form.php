@@ -33,8 +33,8 @@
 	?>
 
 	<div class="form-actions">
-	  <button type="submit" class="btn btn-primary">Salvar</button>
-	  <button type="button" class="btn" onclick="history.back()">Cancelar</button>
+	  <button type="submit" class="btn btn-primary">Save</button>
+	  <button type="button" class="btn" onclick="history.back()">Cancel</button>
 	</div>
 
 </?= form_close(); ?>

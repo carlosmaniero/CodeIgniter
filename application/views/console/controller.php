@@ -7,7 +7,7 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 	}
 
 	/**
-	 * Lista de <?= plural($name) ?>
+	 * List of <?= plural($name) ?>
 
 	 */
 
@@ -26,7 +26,7 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 	}
 
 	/**
-	 * Lista de <?= plural($name) ?>
+	 * Trash list
 
 	 */
 	public function trash()
@@ -44,42 +44,42 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 	}
 
 	/**
-	 * Inserre um <?= $name ?>
+	 * Insert <?= $name ?>
 
 	 */
 	public function insert()
 	{
 		$data = array();
 
-		// Caso a requisição seja do tipo <?= $name ?>
+		// If the request is of type POST
 
 		if($this->input->server('REQUEST_METHOD') == 'POST')
 		{
 			$input_<?= $name ?> = $this->input->post();
 
-			// Configua as entradas que serão salvas no banco de dados
+			// Configures the entries that are saved in the database
 			$this->_config_entry_to_database($input_<?= $name ?>);
 
-			// Resultado da inserção
+			// Result of insertion
 			$result = $this->model->insert($input_<?= $name ?>);
 
 			if($result)
 			{
-				// Respostas em caso de Sucesso
+				// JSON success response
 				if($this->uri->extension == 'json')
 				{
 					$this->show($result);
 				}
 				else
 				{
-					$this->session->set_flashdata('success', '<?= ucfirst($name) ?> inserido com sucesso');
+					$this->session->set_flashdata('success', '<?= ucfirst($name) ?> successfully inserted');
 					redirect('<?= plural($name) ?>/show/' . $result . '.' . $this->uri->extension);
 				}
 			}
 			else
 			{
-				$msg = 'Erro ao salvar registro';
-				// Respostas em caso de erro
+				$msg = 'Error on save register';
+				// JSON error response
 				if($this->uri->extension == 'json')
 				{
 					$this->response_json(array('error'=> $msg), 500);
@@ -94,43 +94,43 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 			return;
 		}
 
-		// Renderiza View
+		// Render View
 		$this->template->load('template/default', '<?= plural($name) ?>/insert', $data);
 	}
 
 	/**
-	 * Edita um <?= $name ?>
+	 * <?= $name ?> Editing
 
 	 */
 	public function edit($id)
 	{
-		// Caso a requisição seja do tipo <?= $name ?>
+		// If the request is of type POST
 
 		if($this->input->server('REQUEST_METHOD') == 'POST')
 		{
 			$input_<?= $name ?> = $this->input->post();
-			// Configua as entradas que serão salvas no banco de dados
+			// Configures the entries that are saved in the database
 			$this->_config_entry_to_database($input_<?= $name ?>);
 
-			// Resultado da atualização			
+			// Update result			
 			$result = $this->model->update($id, $input_<?= $name ?>);
 
 			if($result)
 			{
-				// Respostas em caso de Sucesso
+				// JSON success response
 				if($this->uri->extension == 'json')
 				{
 					$this->show($id);
 				}
 				else
 				{
-					$this->session->set_flashdata('success', '<?= ucfirst($name) ?> editado com sucesso');
+					$this->session->set_flashdata('success', '<?= ucfirst($name) ?> edited successfully');
 					redirect('<?= plural($name) ?>/show/' . $id . '.' . $this->uri->extension);
 				}
 			}
 			else
 			{
-				$msg = 'Erro ao salvar registro';
+				$msg = 'Error on update register';
 				// Respostas em caso de erro
 				if($this->uri->extension == 'json')
 				{
@@ -152,7 +152,7 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 	}
 
 	/**
-	 * Exibe um <?= $name ?>
+	 * <?= $name ?> Show
 
 	 */
 	public function show($id)
@@ -173,7 +173,7 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 	}
 
 	/**
-	 * Exclui um <?= $name ?>
+	 * <?= $name ?> Delete
 
 	 */
 	public function delete($id)
@@ -183,12 +183,12 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 		if($this->model->delete($id))
 		{
 			$data['type'] = 'success';
-			$data['msg'] = '<?= $name ?> deletado com sucesso';
+			$data['msg'] = '<?= $name ?> deleted successfully';
 		}
 		else
 		{
 			$data['type'] = 'error';
-			$data['msg'] = 'Erro ao deletar <?= $name ?>';
+			$data['msg'] = 'Error on delete <?= $name ?>';
 		}
 
 		if($this->uri->extension == 'json')
@@ -203,7 +203,7 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 	}
 
 	/**
-	 * Remove <?= $name ?> definitivamente
+	 * Delete <?= $name ?> permanently
 	 */ 
 	public function delete_permanently($id)
 	{
@@ -212,12 +212,12 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 		if($this->model->delete($id, TRUE))
 		{
 			$data['type'] = 'success';
-			$data['msg'] = '<?= $name ?> deletado definitivamente';
+			$data['msg'] = '<?= $name ?> deleted permanently';
 		}
 		else
 		{
 			$data['type'] = 'error';
-			$data['msg'] = 'Erro ao deletar <?= $name ?>';
+			$data['msg'] = 'Error on delete <?= $name ?>';
 		}
 
 		if($this->uri->extension == 'json')
@@ -232,7 +232,7 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 	}
 
 	/**
-	 * Recuperar um <?= $name ?>
+	 * <?= $name ?> Recover
 
 	 */
 	public function recover($id)
@@ -242,12 +242,12 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 		if($this->model->recover($id))
 		{
 			$data['type'] = 'success';
-			$data['msg'] = '<?= $name ?> recuperado com sucesso';
+			$data['msg'] = '<?= $name ?> recovered successfully';
 		}
 		else
 		{
 			$data['type'] = 'error';
-			$data['msg'] = 'Erro ao recuperar <?= $name ?>';
+			$data['msg'] = 'Error on recover <?= $name ?>';
 		}
 
 		if($this->uri->extension == 'json')
@@ -269,7 +269,7 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 	}
 
 	/**
-	 * Configura entradas que serão salvas no Banco de dados
+	 * Configures entries that are saved in database
 	 */
 	private function _config_entry_to_database(&$data)
 	{
@@ -277,7 +277,7 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 	}
 
 	/**
-	 * Configura entradas para views 
+	 * Configures entries for views 
 	 */
 	private function _config_entry_to_humans(&$data)
 	{

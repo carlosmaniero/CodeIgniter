@@ -1,3 +1,3 @@
-<h1>Edição de <?= ucfirst($name) ?></h1>
+<h1>Editing <?= ucfirst($name) ?></h1>
 
 </?php $this->load->view('<?= plural($name) ?>/form.php') ?>

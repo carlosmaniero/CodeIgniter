@@ -1,4 +1,4 @@
-<h1><?= plural($name) ?> na Lixeira</h1>
+<h1><?= plural($name) ?> on Trash</h1>
 
 </?php if(count($<?= plural($name) ?>)): ?>
 	<table class="table table-striped table-bordered">
@@ -11,15 +11,15 @@
 			<th><?= ucfirst($attr['name']) ?></th>
 			<?php else: ?>
 
-			<th>ID do <?= ucfirst(singular($attr['properties'])) ?></th>
+			<th><?= ucfirst(singular($attr['properties'])) ?> ID</th>
 			<?php
 				endif; 
 			endforeach; 
 			?>
 
-			<th>Deletado em</th>
+			<th>Deleted at</th>
 			<td>
-				<a class="btn btn-inverse" href="</?= site_url('<?= plural($name) ?>') ?>"><span class="icon-arrow-left icon-white"></span> Voltar</a>
+				<a class="btn btn-inverse" href="</?= site_url('<?= plural($name) ?>') ?>"><span class="icon-arrow-left icon-white"></span> Back</a>
 			</td>
 		</tr>
 		</?php foreach($<?= plural($name) ?> as $<?= $name ?>): ?>
@@ -48,6 +48,6 @@
 		</?php endforeach ?>
 	</table>
 </?php else: ?>
-	<p class="text-info">Nenhum item na lixeira</p>
-	<a class="btn" href="</?= site_url('<?= plural($name) ?>') ?>">Voltar</a>
+	<p class="text-info">No items on trash</p>
+	<a class="btn" href="</?= site_url('<?= plural($name) ?>') ?>">Back</a>
 </?php endif ?>

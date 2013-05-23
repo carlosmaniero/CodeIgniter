@@ -1,4 +1,4 @@
-<h1>Listagem de <?= ucfirst(plural($name)) ?></h1>
+<h1>Listing <?= ucfirst(plural($name)) ?></h1>
 
 </?php if(count($<?= plural($name) ?>)): ?>
 	<table class="table table-striped table-bordered">
@@ -11,14 +11,14 @@
 			<th><?= ucfirst($attr['name']) ?></th>
 			<?php else: ?>
 
-			<th>ID do <?= ucfirst(singular($attr['properties'])) ?></th>
+			<th><?= ucfirst(singular($attr['properties'])) ?> ID</th>
 			<?php
 				endif; 
 			endforeach; 
 			?>
 			<td>
-				<a class="btn btn-primary" href="</?= site_url('<?= plural($name) ?>/insert') ?>"><span class="icon-plus icon-white"></span> Novo <?= ucfirst($name) ?></a>
-				<a class="btn btn-inverse" href="</?= site_url('<?= plural($name) ?>/trash') ?>"><span class="icon-trash icon-white"></span> Lixeira</a>
+				<a class="btn btn-primary" href="</?= site_url('<?= plural($name) ?>/insert') ?>"><span class="icon-plus icon-white"></span> New <?= ucfirst($name) ?></a>
+				<a class="btn btn-inverse" href="</?= site_url('<?= plural($name) ?>/trash') ?>"><span class="icon-trash icon-white"></span> Trash</a>
 			</td>
 		</tr>
 		</?php foreach($<?= plural($name) ?> as $<?= $name ?>): ?>
@@ -39,15 +39,15 @@
 				endforeach; 
 				?>
 				<td>
-					<a class="btn" href="</?= site_url('<?= plural($name) ?>/show/' . $<?= $name ?>->id) ?>"><span class="icon-eye-open"></span> Visualizar</a>
-					<a class="btn" href="</?= site_url('<?= plural($name) ?>/edit/' . $<?= $name ?>->id) ?>"><span class="icon-edit"></span> Editar</a>
-					<a class="btn btn-danger" href="</?= site_url('<?= plural($name) ?>/delete/' . $<?= $name ?>->id) ?>" data-confirm="Tem certeza que deseja excluir o <?= $name ?>"><span class="icon-remove icon-white"></span> Excluir</a>
+					<a class="btn" href="</?= site_url('<?= plural($name) ?>/show/' . $<?= $name ?>->id) ?>"><span class="icon-eye-open"></span> Show</a>
+					<a class="btn" href="</?= site_url('<?= plural($name) ?>/edit/' . $<?= $name ?>->id) ?>"><span class="icon-edit"></span> Edit</a>
+					<a class="btn btn-danger" href="</?= site_url('<?= plural($name) ?>/delete/' . $<?= $name ?>->id) ?>" data-confirm="Are you sure you want to delete the <?= $name ?>"><span class="icon-remove icon-white"></span> Delete</a>
 				</td>
 			</tr>
 		</?php endforeach ?>
 	</table>
 </?php else: ?>
-	<p class="text-info">Nenhum <?= $name ?> cadastrado</p>
-	<a class="btn btn-primary" href="</?= site_url('<?= plural($name) ?>/insert') ?>"><span class="icon-plus icon-white"></span> Incluir o primeiro</a>
-	<a class="btn btn-inverse" href="</?= site_url('<?= plural($name) ?>/trash') ?>"><span class="icon-trash icon-white"></span> Lixeira</a>
+	<p class="text-info">No <?= $name ?> registered</p>
+	<a class="btn btn-primary" href="</?= site_url('<?= plural($name) ?>/insert') ?>"><span class="icon-plus icon-white"></span> Include the first</a>
+	<a class="btn btn-inverse" href="</?= site_url('<?= plural($name) ?>/trash') ?>"><span class="icon-trash icon-white"></span> Trash</a>
 </?php endif; ?>
