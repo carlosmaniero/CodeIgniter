@@ -32,6 +32,13 @@ class CI_Auth
 	}
 
 	/**
+	 * Do Logout
+	 */
+	public function logout(){
+		$this->CI->session->unset_userdata($this->table . '_id');
+	}
+
+	/**
 	 * Check if user have permission
 	 */
 	public function check_permission($permission, $user_id = NULL)
@@ -73,6 +80,11 @@ class CI_Auth
 		if($user->password === sha1($user->salt . $password))
 		{
 			$this->CI->session->set_userdata(array($this->table . '_id' => $user->id));
+
+			if($redirect)
+			{
+				redirect($this->CI->session->userdata('auth_redirect'));
+			}
 			return TRUE;
 		}
 
