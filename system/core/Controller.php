@@ -117,7 +117,7 @@ class CI_Controller {
 			if(!$this->auth->check_login())
 			{
 				// Set the Redirect on Auth
-				$this->session->set_flashdata('auth_redirect', $this->router->fetch_class() . '/' . $this->router->fetch_method() . '.' . $this->uri->extension);
+				$this->session->set_userdata('auth_redirect', $this->router->fetch_class() . '/' . $this->router->fetch_method() . '.' . $this->uri->extension);
 
 				if($this->uri->extension === 'json')
 				{
