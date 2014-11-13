@@ -6,4 +6,15 @@ application/cache/*
 
 application/logs/*
 !application/logs/index.html
+<<<<<<< HEAD
 !application/logs/.htaccess
+=======
+!application/logs/.htaccess
+
+user_guide_src/build/*
+user_guide_src/cilexer/build/*
+user_guide_src/cilexer/dist/*
+user_guide_src/cilexer/pycilexer.egg-info/*
+/vendor/
+/nbproject/
+>>>>>>> upstream/develop
