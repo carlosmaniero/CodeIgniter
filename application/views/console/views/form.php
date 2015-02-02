@@ -18,10 +18,15 @@
 		<div class="controls">
 				<?php if($attr['properties']['comments'] == 'image'): ?>
 			</?php if($<?= singular($name) ?>-><?= $attr['name'] ?>): ?>
-			<img src="</?= site_url(UPLOAD_PATH .'<?=  plural($name) ?>/thumbs/' . $<?= singular($name) ?>-><?= $attr['name'] ?>) ?>" alt="" />
+			<img src="</?= site_url(UPLOAD_PATH . '<?= plural($name) ?>/thumbs/' . $<?= singular($name) ?>-><?= $attr['name'] ?>) ?>" alt="" />
 			</?php endif; ?>
-				<?php endif; ?>
 			<br/>
+				<?php elseif($attr['properties']['comments'] == 'file'): ?>
+			</?php if($<?= singular($name) ?>-><?= $attr['name'] ?>): ?>
+			<a href="</?= site_url(UPLOAD_PATH . '<?= plural($name) ?>' . $<?= singular($name) ?>-><?= $attr['name'] ?>) ?>" target="_blank"></?= $<?= singular($name) ?>-><?= $attr['name'] ?> ?></a>
+			</?php endif; ?>
+			<br/>
+				<?php endif; ?>
 			<input type="file" name="input-<?= $attr['name'] ?>" value="" id="input-<?= $attr['name'] ?>">
 		</div>
 	</div>

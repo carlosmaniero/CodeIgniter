@@ -6,11 +6,19 @@ foreach ($attrs as $attr):
 		if($attr['properties']['comments'] == 'image'):
 ?>
 <p>
-	<strong>Imagem: </strong>
+	<strong><?= ucfirst($attr['name']) ?>: </strong>
     </?php if($<?= singular($name) ?>-><?= $attr['name'] ?>): ?>
-		<img src="</?= site_url(UPLOAD_PATH.'<?= plural($name) ?>/thumbs/' . $<?= singular($name) ?>-><?= $attr['name'] ?>) ?>" alt=""/>
+	<img src="</?= site_url(UPLOAD_PATH.'<?= plural($name) ?>/thumbs/' . $<?= singular($name) ?>-><?= $attr['name'] ?>) ?>" alt=""/>
 	</?php endif; ?>
 </p>
+		<?php elseif($attr['properties']['comments'] == 'file'): ?>
+<p>
+	<strong><?= ucfirst($attr['name']) ?>: </strong>
+    </?php if($<?= singular($name) ?>-><?= $attr['name'] ?>): ?>
+	<a href="</?= site_url(UPLOAD_PATH . <?= plural($name) ?> . $<?= singular($name) ?>-><?= $attr['name'] ?>) ?>" target="_blank"></?= $<?= singular($name) ?>-><?= $attr['name'] ?> ?></a>
+	</?php endif; ?>
+</p>
+
 		<?php else: ?>
 <p>
 	<strong><?= ucfirst($attr['name']) ?>: </strong> </?= $<?= $name ?>-><?= $attr['name'] ?> ?>
