@@ -1,13 +1,23 @@
 <h1>Showing <?= ucfirst($name) ?></h1>
 
 <?php 
-foreach ($attrs as $attr): if($attr['name'] != 'belong_to'): 
+foreach ($attrs as $attr):
+	if($attr['name'] != 'belong_to'):
+		if($attr['properties']['comments'] == 'image'):
 ?>
-
+<p>
+	<strong>Imagem: </strong>
+    </?php if($<?= singular($name) ?>-><?= $attr['name'] ?>): ?>
+		<img src="</?= site_url(UPLOAD_PATH.'<?= plural($name) ?>/thumbs/' . $<?= singular($name) ?>-><?= $attr['name'] ?>) ?>" alt=""/>
+	</?php endif; ?>
+</p>
+		<?php else: ?>
 <p>
 	<strong><?= ucfirst($attr['name']) ?>: </strong> </?= $<?= $name ?>-><?= $attr['name'] ?> ?>
 </p>
-<?php else: ?>
+	<?php
+		endif;
+	else: ?>
 
 <p>
 	<strong><?= ucfirst(singular($attr['properties'])) ?> ID</strong> <a href="</?= site_url('<?= plural($attr['properties']) ?>/show/' .  $<?= $name ?>-><?= singular($attr['properties']) ?>_id) ?>"></?= $<?= $name ?>-><?= singular($attr['properties']) ?>_id ?></a>

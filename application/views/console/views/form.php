@@ -1,7 +1,8 @@
-</?= form_open('', array('class' => 'form-horizontal')); ?>
+</?= form_open('', array('class' => 'form-horizontal', 'enctype' => 'multipart/form-data')); ?>
 	<?php 
-	foreach ($attrs as $attr): if($attr['name'] != 'belong_to'): 
-		if($attr['properties']['type'] == 'text'): 
+	foreach ($attrs as $attr):
+		if($attr['name'] != 'belong_to'):
+			if($attr['properties']['type'] == 'text'):
 	?>
 
 	<div class="control-group">
@@ -10,16 +11,30 @@
 	    <textarea name="<?= $attr['name'] ?>" id="input-<?= $attr['name'] ?>" class="input-xxlarge" placeholder="<?= ucfirst($attr['name']) ?>" rows="15"></?= $<?= singular($name) ?>-><?= $attr['name'] ?> ?></textarea>
 	  </div>
 	</div>
-		<?php else: ?>
+			<?php elseif($attr['properties']['comments'] == 'image' || $attr['properties']['comments'] == 'file'): ?>
 
 	<div class="control-group">
-	  <label class="control-label" for="input-<?= $attr['name'] ?>"><?= ucfirst($attr['name']) ?>:</label>
-	  <div class="controls">
-	    <input name="<?= $attr['name'] ?>" type="text" id="input-<?= $attr['name'] ?>" placeholder="<?= ucfirst($attr['name']) ?>" value="</?= $<?= singular($name) ?>-><?= $attr['name'] ?> ?>">
-	  </div>
+		<label class="control-label" for="input-<?= $attr['name'] ?>"><?= ucfirst($attr['name']) ?>:</label>
+		<div class="controls">
+				<?php if($attr['properties']['comments'] == 'image'): ?>
+			</?php if($<?= singular($name) ?>-><?= $attr['name'] ?>): ?>
+			<img src="</?= site_url(UPLOAD_PATH .'<?=  plural($name) ?>/thumbs/' . $<?= singular($name) ?>-><?= $attr['name'] ?>) ?>" alt="" />
+			</?php endif; ?>
+				<?php endif; ?>
+			<br/>
+			<input type="file" name="input-<?= $attr['name'] ?>" value="" id="input-<?= $attr['name'] ?>">
+		</div>
 	</div>
-		<?php endif; ?>
-	<?php else: ?>
+			<?php else: ?>
+
+	<div class="control-group">
+		<label class="control-label" for="input-<?= $attr['name'] ?>"><?= ucfirst($attr['name']) ?>:</label>
+		<div class="controls">
+			<input name="<?= $attr['name'] ?>" type="text" id="input-<?= $attr['name'] ?>" placeholder="<?= ucfirst($attr['name']) ?>" value="</?= $<?= singular($name) ?>-><?= $attr['name'] ?> ?>">
+		</div>
+	</div>
+			<?php endif; ?>
+		<?php else: ?>
 
 	<div class="control-group">
 	  <label class="control-label" for="input-<?= singular($attr['properties']) ?>-id">ID do <?= ucfirst(singular($attr['properties'])) ?>:</label>
@@ -28,8 +43,8 @@
 	  </div>
 	</div>
 	<?php
-		endif; 
-	endforeach; 
+		endif;
+	endforeach;
 	?>
 
 	<div class="form-actions">

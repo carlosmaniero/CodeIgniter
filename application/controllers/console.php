@@ -106,7 +106,7 @@ class Console extends CI_Controller {
 		$name = $args[0];
 
 		$controller = '<?php ' . $this->load->view('console/controller', array('name' => $name), true);
-		$controller_file = sprintf("%s/controllers/%s.php", APPPATH, plural($name));
+		$controller_file = sprintf("%s/controllers/%s.php", APPPATH, ucfirst(plural($name)));
 
 		// Check if controller already exist
 		if(
@@ -136,7 +136,7 @@ class Console extends CI_Controller {
 		$name = $args[0];
 
 		$model = '<?php ' . $this->load->view('console/model', array('name' => $name), true);
-		$model_file = sprintf("%s/models/%s_model.php", APPPATH, $name);
+		$model_file = sprintf("%s/models/%s_model.php", APPPATH, ucfirst($name));
 
 		// Check if model already exist
 		if(
@@ -202,7 +202,9 @@ class Console extends CI_Controller {
 		}
 
 		$default_properties = array();
-		$default_properties['string'] = $default_properties['file'] = array('type' => 'varchar', 'constraint' => '240');
+		$default_properties['string'] = array('type' => 'varchar', 'constraint' => '255');
+		$default_properties['file'] = array('type' => 'varchar', 'constraint' => '255', 'comments' => 'file');
+		$default_properties['image'] = array('type' => 'varchar', 'constraint' => '255', 'comments' => 'image');
 		$default_properties['text'] = array('type' => 'text');
 		$default_properties['date'] = array('type' => 'date');
 		$default_properties['datetime'] = array('type' => 'datetime');
