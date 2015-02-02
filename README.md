@@ -26,7 +26,7 @@ Voltando para um estado específico:
 
 *Criando um CRUD completo*
 
-	php index.php console scaffold post title:string body:text
+	php index.php console scaffold post title:string body:text image:image file:file
 	php index.php console scaffold comment name:string comment:text belong_to:posts
 
 ## Autenticação Nativa
