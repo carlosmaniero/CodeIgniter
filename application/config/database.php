@@ -101,9 +101,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
+	'hostname' => '192.168.1.200',
+	'username' => 'user',
+	'password' => 'user$',
 	'database' => 'codeigniter_test',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
@@ -121,11 +121,6 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
-$db['default']['hostname'] = 'mysql17.elvirabrandao.com.br';
-$db['default']['username'] = 'elvirabrandao16';
-$db['default']['password'] = 'E3adC3vB';
-$db['default']['database'] = 'elvirabrandao16';
-
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */
