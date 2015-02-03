@@ -1,4 +1,4 @@
-class <?= ucfirst(plural($name)) ?> extends CI_Controller
+class <?= ucfirst(plural($name)) ?> extends MY_Controller
 {
 	public function __construct()
 	{
@@ -8,7 +8,6 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 
 	/**
 	 * List of <?= plural($name) ?>
-
 	 */
 
 	public function index()
@@ -27,7 +26,6 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 
 	/**
 	 * Trash list
-
 	 */
 	public function trash()
 	{
@@ -45,7 +43,6 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 
 	/**
 	 * Insert <?= $name ?>
-
 	 */
 	public function insert()
 	{
@@ -56,6 +53,33 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 		if($this->input->server('REQUEST_METHOD') == 'POST')
 		{
 			$input_<?= $name ?> = $this->input->post();
+
+<?php foreach ($attrs as $attr):
+	if($attr['properties']['comments'] == 'image' || $attr['properties']['comments'] == 'file'):
+?>
+			//Config upload
+			$path = UPLOAD_PATH . '<?= plural($name) ?>/<?= $attr['properties']['comments'] ?>/';
+			$config['upload_path'] = $path;
+			$config['allowed_types'] = '*';
+			$this->load->library('upload', $config);
+
+			if(isset($_FILES['input-<?= $attr['name'] ?>']) && !empty($_FILES['input-<?= $attr['name'] ?>']['name'])){
+
+				if ( !$this->upload->do_upload('input-<?= $attr['name'] ?>')){
+					$this->session->set_flashdata('error', $this->upload->display_errors());
+					//redirect('<?= plural($name) ?>/show/');
+				}else{
+					$file = $this->upload->data();
+					$input_<?= $name ?>['<?= $attr['name'] ?>'] = $file['file_name'];
+<?php if($attr['properties']['comments'] == 'image'): ?>
+					if($file['image_width'] > 1024)
+						$this->resize_image($file['file_name'], $path);
+					$this->make_thumb($file['file_name'], $path);
+<?php endif; ?>
+				}
+			}
+<?php endif;
+endforeach; ?>
 
 			// Configures the entries that are saved in the database
 			$this->_config_entry_to_database($input_<?= $name ?>);
@@ -100,7 +124,6 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 
 	/**
 	 * <?= $name ?> Editing
-
 	 */
 	public function edit($id)
 	{
@@ -109,6 +132,35 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 		if($this->input->server('REQUEST_METHOD') == 'POST')
 		{
 			$input_<?= $name ?> = $this->input->post();
+
+
+<?php foreach ($attrs as $attr):
+	if($attr['properties']['comments'] == 'image' || $attr['properties']['comments'] == 'file'):
+?>
+			//Config upload
+			$path = UPLOAD_PATH . '<?= plural($name) ?>/<?= $attr['properties']['comments'] ?>/';
+			$config['upload_path'] = $path;
+			$config['allowed_types'] = '*';
+			$this->load->library('upload', $config);
+
+			if(isset($_FILES['input-<?= $attr['name'] ?>']) && !empty($_FILES['input-<?= $attr['name'] ?>']['name'])){
+
+				if ( !$this->upload->do_upload('input-<?= $attr['name'] ?>')){
+					$this->session->set_flashdata('error', $this->upload->display_errors());
+					redirect('<?= plural($name) ?>/show/'.$id);
+				}else{
+					$file = $this->upload->data();
+					$input_<?= $name ?>['<?= $attr['name'] ?>'] = $file['file_name'];
+<?php if($attr['properties']['comments'] == 'image'): ?>
+					if($file['image_width'] > 1024)
+						$this->resize_image($file['file_name'], $path);
+					$this->make_thumb($file['file_name'], $path);
+<?php endif; ?>
+				}
+			}
+<?php endif;
+endforeach; ?>
+
 			// Configures the entries that are saved in the database
 			$this->_config_entry_to_database($input_<?= $name ?>);
 
@@ -153,7 +205,6 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 
 	/**
 	 * <?= $name ?> Show
-
 	 */
 	public function show($id)
 	{
@@ -174,7 +225,6 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 
 	/**
 	 * <?= $name ?> Delete
-
 	 */
 	public function delete($id)
 	{
@@ -233,7 +283,6 @@ class <?= ucfirst(plural($name)) ?> extends CI_Controller
 
 	/**
 	 * <?= $name ?> Recover
-
 	 */
 	public function recover($id)
 	{
