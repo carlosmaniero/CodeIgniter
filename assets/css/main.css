@@ -298,3 +298,48 @@ textarea {
         page-break-after: avoid;
     }
 }
+/*  *
+    * Styles for the multiple exhibition modes.
+    *   */
+
+.list-unstyled li{
+    position: relative;
+    margin: 20px;
+}
+
+.list-unstyled .close{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.list-unstyled img{
+    width: 100%;
+    display: block;
+}
+
+.list-unstyled .link{
+    display: none;
+}
+
+.list-unstyled input{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    border: none;
+    bottom: 0;
+    background-color: yellow;
+}
+
+.list-inline .link{
+    display: inli;
+}
+.list-inline img{
+    width: 32px;
+    height: 32px;
+}
+.list-inline input{
+    position: static;
+    min-width: 300px;
+    text-align: left;
+}

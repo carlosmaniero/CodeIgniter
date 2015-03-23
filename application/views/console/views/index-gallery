@@ -1,0 +1,25 @@
+<h1>Listing <?= ucfirst(plural($name)) ?></h1>
+
+<form action="<?= site_url('</?= site_url('<?= plural($name) ?>/create') ?>" style="background: #FED03D; padding: 10px; margin-top: 10px;" method="post">
+  <label>
+    <?= (plural($name).indexOf("file") >= 0) ? "File: " : "Image: " ?>
+    <input type="file" name="input-<?= (plural($name).indexOf('file') >= 0) ? 'File: ' : 'Image: ' ?>" value="" id="input-<?= (plural($name).indexOf('file') >= 0) ? 'File: ' : 'Image: ' ?>"> 
+    <input type="submit" value="criar">
+  </label>
+</form>
+
+<div id="outros">
+	<input id="search" onkeyup="javascript: search(this.value.toLowerCase());">
+	<button onclick="javascript: change();">Change Exhibition</button>
+</div>
+
+<ul id="objects" class="list-inline">
+	</?php foreach($<?= plural($name) ?> as $<?= $name ?>):>
+  <li class="item">
+    <img button src="</?= $name ?>->image" onclick="javascript: copyToClipboard('</?= $name ?>->link');">
+    <input readOnly onclick="javascript: edit(this);" onkeydown="javascript: cancelEnter(event, this);" onblur="javascript: done(13, this);" onkeyup="javascript: done(event.keyCode, this);"></?= $name ?>->title</input>
+    <button class="link" onclick="javascript: copyToClipboard('</?= $name ?>->link');">link</button>
+    <button class="close">X</button>
+  </li>
+  <?php endforeach;  ?>
+</ul>

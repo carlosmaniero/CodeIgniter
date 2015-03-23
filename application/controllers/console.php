@@ -23,7 +23,7 @@ class Console extends CI_Controller {
 		{
 			// Run the lasted migration
 			if(!$this->migration->latest()) show_error($this->migration->error_string());
-	  }
+	  	}
 		else
 		{
 			// Run a version
