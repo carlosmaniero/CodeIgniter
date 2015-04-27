@@ -1,31 +1,31 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Login extends MY_Controller {
+
+    protected $require_auth = FALSE;
 
 	public function index()
 	{
-		if($this->uri->extension == 'json')
-		{
-			echo '{message:"Você deve estar logado"}';
-		}else{
-			echo form_open('login/do_login');
+		// Hide Navbar
+		$data = new stdClass();
 
-				echo form_label('Usuário:', 'username');
-				echo form_input('username','','id="username"');
-
-				echo form_label('Senha:', 'password');
-				echo form_password('password','', 'id="password"');
-
-				echo form_submit('button', 'Entrar');
-
-			echo form_close();
-		}
+		$data->noNav = TRUE;
+		$this->template->load('template/default', 'login/login', $data);
 	}
 
 	public function do_login()
 	{
 		$login = $this->auth->do_login($this->input->post('username'), $this->input->post('password'));
-		var_dump($login);
+		if(!$login)
+		{
+			redirect("/login/");
+		}
+	}
+
+	public function logout()
+	{
+		$this->auth->logout();
+		redirect('/');
 	}
 
 }
