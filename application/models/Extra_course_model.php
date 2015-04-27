@@ -1,0 +1,1 @@
+<?php class Extra_course_model extends MY_Model{}

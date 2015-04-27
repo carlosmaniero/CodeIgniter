@@ -1,0 +1,1 @@
+<?php class Comes_to_school_model extends MY_Model{}

@@ -1,0 +1,1 @@
+<?php class Post_category_model extends MY_Model{}

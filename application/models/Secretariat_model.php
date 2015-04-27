@@ -1,0 +1,1 @@
+<?php class Secretariat_model extends MY_Model{}

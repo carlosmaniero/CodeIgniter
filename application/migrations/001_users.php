@@ -2,7 +2,7 @@
 /**
  * Create the user Table
  */
-class Migration_Users extends CI_Migration 
+class Migration_Users extends CI_Migration
 {
 
 	public function __construct()
@@ -11,7 +11,7 @@ class Migration_Users extends CI_Migration
 		$this->load->database();
 	}
 
-	public function up() 
+	public function up()
 	{
 
 		$this->dbforge->add_field(array(
@@ -66,7 +66,7 @@ class Migration_Users extends CI_Migration
 
 		// Add id as primary key
 		$this->dbforge->add_key('id', TRUE);
-		
+
 		if($this->dbforge->create_table('ci_users'))
 		{
 			log_message('debug', 'Table ci_users created!');
@@ -95,7 +95,7 @@ class Migration_Users extends CI_Migration
 
 	}
 
-	public function down() 
+	public function down()
 	{
 
 		if($this->dbforge->drop_table('ci_users'))

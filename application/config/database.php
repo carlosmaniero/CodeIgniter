@@ -101,10 +101,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '192.168.1.200',
-	'username' => 'user',
-	'password' => 'user$',
-	'database' => 'codeigniter_test',
+	'hostname' => 'mysql61.agenciafreela.com.br',
+	'username' => 'agenciafreela53',
+	'password' => 'FREELAgrac15',
+	'database' => 'agenciafreela53',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => TRUE,

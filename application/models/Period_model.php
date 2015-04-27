@@ -1,0 +1,1 @@
+<?php class Period_model extends MY_Model{}
